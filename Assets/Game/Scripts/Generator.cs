@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GeneratorScript : MonoBehaviour
+public class Generator : MonoBehaviour
 {
     const int rows = 7;
     const int cols = 6;
