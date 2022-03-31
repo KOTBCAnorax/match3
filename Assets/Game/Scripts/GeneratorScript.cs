@@ -30,7 +30,7 @@ public class GeneratorScript : MonoBehaviour
 
     void GenerateField()
     {
-        if (HasChildren(fieldObject))
+        if (HasChildren(fieldObject.transform))
         {
             return;
         }
@@ -48,7 +48,7 @@ public class GeneratorScript : MonoBehaviour
 
     void GenerateTokens()
     {
-        if (HasChildren(tokensContainerObject))
+        if (HasChildren(tokensContainerObject.transform))
         {
             return;
         }
@@ -61,17 +61,8 @@ public class GeneratorScript : MonoBehaviour
         }
     }
 
-    bool HasChildren(GameObject parent)
+    bool HasChildren(Transform obj)
     {
-        bool result = false;
-
-        if (parent.transform.childCount > 0)
-        {
-            result = true;
-        }
-
-        return result;
+        return obj.childCount > 0;
     }
-
-    // comment to test git commiting
 }
