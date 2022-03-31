@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Generator : MonoBehaviour
+public class GeneratorScript : MonoBehaviour
 {
     const int rows = 7;
     const int cols = 6;
@@ -30,6 +30,11 @@ public class Generator : MonoBehaviour
 
     void GenerateField()
     {
+        if (HasChildren(fieldObject))
+        {
+            return;
+        }
+
         for (int i = 0; i < cols; i++)
         {
             for (int j = 0; j < rows; j++)
@@ -43,11 +48,28 @@ public class Generator : MonoBehaviour
 
     void GenerateTokens()
     {
+        if (HasChildren(tokensContainerObject))
+        {
+            return;
+        }
+
         for (int i = 0; i < cols; i++)
         {
             Vector3 pos = new Vector3(i, topRow, 0);
             tokens[i, topRow] = Instantiate(tokenPrefab, pos, Quaternion.identity);
             tokens[i, topRow].transform.parent = tokensContainerObject.transform;
         }
+    }
+
+    bool HasChildren(GameObject parent)
+    {
+        bool result = false;
+
+        if (parent.transform.childCount > 0)
+        {
+            result = true;
+        }
+
+        return result;
     }
 }
