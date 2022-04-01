@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GeneratorScript : MonoBehaviour
 {
-    [SerializeField] private int ROWS_COUNT = 7;
-    [SerializeField] private int COLUMNS_COUNT = 6;
+    [SerializeField] private int rowsCount = 7;
+    [SerializeField] private int columsCount = 6;
 
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject tokenPrefab;
@@ -26,9 +26,9 @@ public class GeneratorScript : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < COLUMNS_COUNT; i++)
+        for (int i = 0; i < columsCount; i++)
         {
-            for (int j = 0; j < ROWS_COUNT; j++)
+            for (int j = 0; j < rowsCount; j++)
             {
                 Vector3 pos = new Vector3(i, j, 0);
                 Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
@@ -44,9 +44,11 @@ public class GeneratorScript : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < COLUMNS_COUNT; i++)
+        int topRowId = rowsCount - 1;
+
+        for (int i = 0; i < columsCount; i++)
         {
-            Vector3 pos = new Vector3(i, TopRowId(), 0);
+            Vector3 pos = new Vector3(i, topRowId, 0);
             Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
         }
     }
@@ -54,10 +56,5 @@ public class GeneratorScript : MonoBehaviour
     private bool HasChildren(Transform obj)
     {
         return obj.childCount > 0;
-    }
-
-    private int TopRowId()
-    {
-        return ROWS_COUNT - 1;
     }
 }
