@@ -13,6 +13,12 @@ public class GeneratorScript : MonoBehaviour
     [SerializeField] GameObject fieldObject;
     [SerializeField] GameObject tokensContainerObject;
 
+    void Start()
+    {
+        GenerateField();
+        GenerateTokens();
+    }
+
     [ContextMenu("GenerateField")]
     void GenerateField()
     {
