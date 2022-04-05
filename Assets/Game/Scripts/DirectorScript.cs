@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//commit test
-
-public class GeneratorScript : MonoBehaviour
+public class DirectorScript: MonoBehaviour
 {
     [SerializeField] private int rowsCount = 7;
     [SerializeField] private int columsCount = 6;
