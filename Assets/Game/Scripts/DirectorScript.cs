@@ -12,6 +12,7 @@ public class DirectorScript: MonoBehaviour
     [SerializeField] private GameObject fieldObject;
     [SerializeField] private GameObject tokensContainerObject;
 
+    private GameObject[,] field;
     private Vector2[] spawnPoints;
 
     private void Start()
@@ -29,12 +30,16 @@ public class DirectorScript: MonoBehaviour
             return;
         }
 
+        field = new GameObject[columsCount, rowsCount];
+
         for (int i = 0; i < columsCount; i++)
         {
             for (int j = 0; j < rowsCount; j++)
             {
                 Vector2 pos = new Vector2(i, j);
-                Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
+                GameObject tile = 
+                    Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
+                field[i, j] = tile;
             }
         }
     }
@@ -52,7 +57,9 @@ public class DirectorScript: MonoBehaviour
             for (int j = 0; j < rowsCount; j++)
             {
                 Vector2 pos = new Vector2(i, j);
-                Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
+                GameObject token = 
+                    Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
+                field[i, j].GetComponent<TileScript>().myToken = token;
             }
         }
     }

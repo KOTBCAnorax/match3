@@ -7,6 +7,7 @@ public class TileScript : MonoBehaviour
     [SerializeField] Sprite normalSprite;
     [SerializeField] Sprite higlihtedSprite;
     [SerializeField] SpriteRenderer sr;
+    [SerializeField] public GameObject myToken;
 
     private void OnMouseOver()
     {
