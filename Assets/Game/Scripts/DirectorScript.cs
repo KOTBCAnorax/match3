@@ -16,6 +16,7 @@ public class DirectorScript: MonoBehaviour
     {
         GenerateField();
         GenerateTokens();
+        GenerateSpawnPoints();
     }
 
     [ContextMenu("GenerateField")]
@@ -51,6 +52,11 @@ public class DirectorScript: MonoBehaviour
             Vector3 pos = new Vector3(i, topRowId, 0);
             Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
         }
+    }
+
+    private void GenerateSpawnPoints()
+    {
+
     }
 
     private bool HasChildren(Transform obj)
