@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7804878617016640357}
   - component: {fileID: 7804878617016640354}
-  - component: {fileID: 7765660407576783938}
+  - component: {fileID: 2771962255520614430}
   m_Layer: 0
   m_Name: token
   m_TagString: Untagged
@@ -83,24 +83,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &7765660407576783938
-Rigidbody2D:
-  serializedVersion: 4
+--- !u!114 &2771962255520614430
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7804878617016640355}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb27e6dd4d9f84a4e8297a80035dcfec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Colors:
+  - {fileID: 21300000, guid: 7f71e024d9332c74a8d06cc9867f279b, type: 3}
+  - {fileID: 21300000, guid: 31178a648b1d4e74aab31f1b12e993c2, type: 3}
+  - {fileID: 21300000, guid: 08b7274c33e7c334fa9bdfdb8f6656d5, type: 3}
+  - {fileID: 21300000, guid: 0c650e9a914ac1d4b814ff43b10a014a, type: 3}
+  - {fileID: 21300000, guid: aaccdc8df56f64345983e68352f3c6be, type: 3}
+  - {fileID: 21300000, guid: 8d9d26032c946d949a741e51ed74d475, type: 3}
+  mySpriteRenderer: {fileID: 7804878617016640354}
