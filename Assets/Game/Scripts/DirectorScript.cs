@@ -12,11 +12,13 @@ public class DirectorScript: MonoBehaviour
     [SerializeField] private GameObject fieldObject;
     [SerializeField] private GameObject tokensContainerObject;
 
+    private Vector2[] spawnPoints;
+
     private void Start()
     {
         GenerateField();
         GenerateTokens();
-        GenerateSpawnPoints();
+        PlaceSpawnPoints();
     }
 
     [ContextMenu("GenerateField")]
@@ -31,7 +33,7 @@ public class DirectorScript: MonoBehaviour
         {
             for (int j = 0; j < rowsCount; j++)
             {
-                Vector3 pos = new Vector3(i, j, 0);
+                Vector2 pos = new Vector2(i, j);
                 Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
             }
         }
@@ -45,18 +47,24 @@ public class DirectorScript: MonoBehaviour
             return;
         }
 
-        int topRowId = rowsCount - 1;
-
         for (int i = 0; i < columsCount; i++)
         {
-            Vector3 pos = new Vector3(i, topRowId, 0);
-            Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
+            for (int j = 0; j < rowsCount; j++)
+            {
+                Vector2 pos = new Vector2(i, j);
+                Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
+            }
         }
     }
 
-    private void GenerateSpawnPoints()
+    private void PlaceSpawnPoints()
     {
+        spawnPoints = new Vector2[columsCount];
 
+        for (int i = 0; i < columsCount; i++)
+        {
+            spawnPoints[i] = new Vector2(i, rowsCount);
+        }
     }
 
     private bool HasChildren(Transform obj)
