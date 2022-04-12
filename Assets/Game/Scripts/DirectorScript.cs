@@ -12,17 +12,19 @@ public class DirectorScript: MonoBehaviour
     [SerializeField] private GameObject fieldObject;
     [SerializeField] private GameObject tokensContainerObject;
 
-    private GameObject[,] field;
-    private Vector2[] spawnPoints;
+    public bool[,] grid;
 
     private void Start()
     {
         GenerateField();
-        GenerateTokens();
-        PlaceSpawnPoints();
+        SpawnTokens();
     }
 
-    [ContextMenu("GenerateField")]
+    private void Update()
+    {
+        SpawnTokens();
+    }
+
     private void GenerateField()
     {
         if (HasChildren(fieldObject.transform))
@@ -30,7 +32,7 @@ public class DirectorScript: MonoBehaviour
             return;
         }
 
-        field = new GameObject[columsCount, rowsCount];
+        grid = new bool[columsCount, rowsCount];
 
         for (int i = 0; i < columsCount; i++)
         {
@@ -39,38 +41,27 @@ public class DirectorScript: MonoBehaviour
                 Vector2 pos = new Vector2(i, j);
                 GameObject tile = 
                     Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
-                field[i, j] = tile;
+
+                grid[i, j] = false;
             }
         }
     }
 
-    [ContextMenu("GenerateTokens")]
-    private void GenerateTokens()
+    private void SpawnTokens()
     {
-        if (HasChildren(tokensContainerObject.transform))
-        {
-            return;
-        }
+        int topRow = rowsCount - 1;
 
         for (int i = 0; i < columsCount; i++)
         {
-            for (int j = 0; j < rowsCount; j++)
+            if (!grid[i, topRow])
             {
-                Vector2 pos = new Vector2(i, j);
-                GameObject token = 
-                    Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject.transform);
-                field[i, j].GetComponent<TileScript>().myToken = token;
+                Vector2 pos = new Vector2(i, topRow);
+                GameObject token =
+                    Instantiate(tokenPrefab, pos, Quaternion.identity, 
+                                tokensContainerObject.transform);
+
+                grid[i, topRow] = true;
             }
-        }
-    }
-
-    private void PlaceSpawnPoints()
-    {
-        spawnPoints = new Vector2[columsCount];
-
-        for (int i = 0; i < columsCount; i++)
-        {
-            spawnPoints[i] = new Vector2(i, rowsCount);
         }
     }
 

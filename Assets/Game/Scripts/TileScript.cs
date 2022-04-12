@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour
 {
-    [SerializeField] Sprite normalSprite;
-    [SerializeField] Sprite higlihtedSprite;
-    [SerializeField] SpriteRenderer sr;
-    [SerializeField] public GameObject myToken;
+    private DirectorScript director;
 
-    private void OnMouseOver()
+    private void Start()
     {
-        sr.sprite = higlihtedSprite;
+        director = GameObject.Find("Director").GetComponent<DirectorScript>();
     }
 
-    private void OnMouseExit()
+    // Debug
+    private void OnMouseUp()
     {
-        sr.sprite = normalSprite;
+        Debug.Log(director.grid[(int)transform.position.x, (int)transform.position.y]);
     }
 }
