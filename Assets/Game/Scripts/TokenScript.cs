@@ -8,11 +8,9 @@ public class TokenScript : MonoBehaviour
     [SerializeField] SpriteRenderer mySpriteRenderer;
     [SerializeField] SpriteRenderer myBackgroundRenderer;
 
-    public Vector2 lowestEmptyTile;
-
     private float speed = 10f;
-    private int[] myPosition; // 1-d array of 2
-    private int[] tileBelowPosition; // 1-d array of 2
+    private Vector2Int myPosition;
+    private Vector2Int tileBelowPosition;
     private DirectorScript director;
 
     private void Start()
@@ -20,8 +18,7 @@ public class TokenScript : MonoBehaviour
         myBackgroundRenderer.enabled = false;
         PickColor();
         director = GameObject.Find("Director").GetComponent<DirectorScript>();
-        myPosition = new int[] {Mathf.RoundToInt(transform.position.x),
-                                Mathf.RoundToInt(transform.position.y)};
+        myPosition = Vector2Int.RoundToInt(transform.position);
         FindTileBelowPosition();
     }
 
@@ -34,73 +31,41 @@ public class TokenScript : MonoBehaviour
     {
         int colorId = Random.Range(0, Colors.Length);
         mySpriteRenderer.sprite = Colors[colorId];
-        AssignTag(colorId);
-    }
-
-    private void AssignTag(int colorId)
-    {
-        switch (colorId)
-        {
-            case 0:
-                gameObject.tag = "blue";
-                break;
-            case 1:
-                gameObject.tag = "green";
-                break;
-            case 2:
-                gameObject.tag = "orange";
-                break;
-            case 3:
-                gameObject.tag = "purple";
-                break;
-            case 4:
-                gameObject.tag = "red";
-                break;
-            case 5:
-                gameObject.tag = "yellow";
-                break;
-        }
     }
 
     private void FindTileBelowPosition()
     {
-        tileBelowPosition = new int[2];
-        tileBelowPosition[0] = myPosition[0];
-        tileBelowPosition[1] = (myPosition[1] - 1 >= 0) ? (myPosition[1] - 1) : 0;
+        tileBelowPosition.x = myPosition.x;
+        tileBelowPosition.y = (myPosition.y - 1 >= 0) ? (myPosition.y - 1) : 0;
     }
 
     private void Fall()
     {
-        if (Mathf.Ceil(transform.position.y) == tileBelowPosition[1])
+        if (Mathf.Ceil(transform.position.y) == tileBelowPosition.y)
         {
             UpdatePosition();
         }
         
-        if (TileBelowIsEmpty())
+        if (!TileBelowIsOccupied())
         {
             transform.position =
-            Vector3.MoveTowards(transform.position, ArrayToVector(tileBelowPosition),
+            Vector2.MoveTowards(transform.position, tileBelowPosition,
                                 speed * Time.deltaTime);
         }
     }
 
     private void UpdatePosition()
     {
-        director.grid[myPosition[0], myPosition[1]] = false;
-        director.grid[tileBelowPosition[0], tileBelowPosition[1]] = true;
+        director.SetTileEmpty(myPosition.x, myPosition.y);
+        director.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
 
-        myPosition[1] = tileBelowPosition[1];
-        tileBelowPosition[1] = (myPosition[1] - 1 >= 0) ? (myPosition[1] - 1) : 0;
+        myPosition.y = tileBelowPosition.y;
+        tileBelowPosition.y = (myPosition.y - 1 >= 0) ? (myPosition.y - 1) : 0;
     }
 
-    private bool TileBelowIsEmpty()
+    private bool TileBelowIsOccupied()
     {
-        return !director.grid[tileBelowPosition[0], tileBelowPosition[1]];
-    }
-
-    private Vector3 ArrayToVector(int[] twoDimensionalArray)
-    {
-        return new Vector3(twoDimensionalArray[0], twoDimensionalArray[1], 0);
+        return director.TileIsOccupied(tileBelowPosition.x, tileBelowPosition.y);
     }
 
     private void OnMouseEnter()
@@ -116,7 +81,7 @@ public class TokenScript : MonoBehaviour
     //Debug
     private void OnMouseUp()
     {
-        director.grid[myPosition[0], myPosition[1]] = false;
+        director.SetTileEmpty(myPosition.x, myPosition.y);
         Destroy(gameObject);
     }
 }

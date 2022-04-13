@@ -10,10 +10,4 @@ public class TileScript : MonoBehaviour
     {
         director = GameObject.Find("Director").GetComponent<DirectorScript>();
     }
-
-    // Debug
-    private void OnMouseUp()
-    {
-        Debug.Log(director.grid[(int)transform.position.x, (int)transform.position.y]);
-    }
 }

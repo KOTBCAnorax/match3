@@ -7,12 +7,12 @@ public class DirectorScript: MonoBehaviour
     [SerializeField] private int rowsCount = 7;
     [SerializeField] private int columsCount = 6;
 
-    [SerializeField] private GameObject tilePrefab;
-    [SerializeField] private GameObject tokenPrefab;
-    [SerializeField] private GameObject fieldObject;
-    [SerializeField] private GameObject tokensContainerObject;
+    [SerializeField] private TileScript tilePrefab;
+    [SerializeField] private TokenScript tokenPrefab;
+    [SerializeField] private Transform fieldObject;
+    [SerializeField] private Transform tokensContainerObject;
 
-    public bool[,] grid;
+    private bool[,] grid;
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class DirectorScript: MonoBehaviour
 
     private void GenerateField()
     {
-        if (HasChildren(fieldObject.transform))
+        if (HasChildren(fieldObject))
         {
             return;
         }
@@ -39,8 +39,7 @@ public class DirectorScript: MonoBehaviour
             for (int j = 0; j < rowsCount; j++)
             {
                 Vector2 pos = new Vector2(i, j);
-                GameObject tile = 
-                    Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject.transform);
+                Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject);
 
                 grid[i, j] = false;
             }
@@ -53,12 +52,10 @@ public class DirectorScript: MonoBehaviour
 
         for (int i = 0; i < columsCount; i++)
         {
-            if (!grid[i, topRow])
+            if (!TileIsOccupied(i, topRow))
             {
                 Vector2 pos = new Vector2(i, topRow);
-                GameObject token =
-                    Instantiate(tokenPrefab, pos, Quaternion.identity, 
-                                tokensContainerObject.transform);
+                Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject);
 
                 grid[i, topRow] = true;
             }
@@ -68,5 +65,20 @@ public class DirectorScript: MonoBehaviour
     private bool HasChildren(Transform obj)
     {
         return obj.childCount > 0;
+    }
+
+    public bool TileIsOccupied(int column, int row)
+    {
+        return grid[column, row];
+    }
+
+    public void SetTileEmpty(int column, int row)
+    {
+        grid[column, row] = false;
+    }
+
+    public void SetTileOccupied(int column, int row)
+    {
+        grid[column, row] = true;
     }
 }
