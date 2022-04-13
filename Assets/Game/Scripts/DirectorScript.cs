@@ -55,7 +55,8 @@ public class DirectorScript: MonoBehaviour
             if (!TileIsOccupied(i, topRow))
             {
                 Vector2 pos = new Vector2(i, topRow);
-                Instantiate(tokenPrefab, pos, Quaternion.identity, tokensContainerObject);
+                Instantiate(tokenPrefab, pos, Quaternion.identity, 
+                    tokensContainerObject).Setup(gameObject);
 
                 grid[i, topRow] = true;
             }

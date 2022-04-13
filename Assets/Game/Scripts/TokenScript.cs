@@ -11,13 +11,13 @@ public class TokenScript : MonoBehaviour
     private float speed = 10f;
     private Vector2Int myPosition;
     private Vector2Int tileBelowPosition;
-    private DirectorScript director;
+    private DirectorScript directorRef;
 
-    private void Start()
+    public void Setup(GameObject director)
     {
         myBackgroundRenderer.enabled = false;
         PickColor();
-        director = GameObject.Find("Director").GetComponent<DirectorScript>();
+        directorRef = director.GetComponent<DirectorScript>();
         myPosition = Vector2Int.RoundToInt(transform.position);
         FindTileBelowPosition();
     }
@@ -56,8 +56,8 @@ public class TokenScript : MonoBehaviour
 
     private void UpdatePosition()
     {
-        director.SetTileEmpty(myPosition.x, myPosition.y);
-        director.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        directorRef.SetTileEmpty(myPosition.x, myPosition.y);
+        directorRef.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
 
         myPosition.y = tileBelowPosition.y;
         tileBelowPosition.y = (myPosition.y - 1 >= 0) ? (myPosition.y - 1) : 0;
@@ -65,7 +65,7 @@ public class TokenScript : MonoBehaviour
 
     private bool TileBelowIsOccupied()
     {
-        return director.TileIsOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        return directorRef.TileIsOccupied(tileBelowPosition.x, tileBelowPosition.y);
     }
 
     private void OnMouseEnter()
@@ -81,7 +81,7 @@ public class TokenScript : MonoBehaviour
     //Debug
     private void OnMouseUp()
     {
-        director.SetTileEmpty(myPosition.x, myPosition.y);
+        directorRef.SetTileEmpty(myPosition.x, myPosition.y);
         Destroy(gameObject);
     }
 }
