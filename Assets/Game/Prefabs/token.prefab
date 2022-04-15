@@ -179,16 +179,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb27e6dd4d9f84a4e8297a80035dcfec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Colors:
+  tokenSpriteVariants:
+  - {fileID: 21300000, guid: af1a5a0fe0fa98c40827b6ec06676ac1, type: 3}
   - {fileID: 21300000, guid: 7f71e024d9332c74a8d06cc9867f279b, type: 3}
   - {fileID: 21300000, guid: 31178a648b1d4e74aab31f1b12e993c2, type: 3}
   - {fileID: 21300000, guid: 08b7274c33e7c334fa9bdfdb8f6656d5, type: 3}
   - {fileID: 21300000, guid: 0c650e9a914ac1d4b814ff43b10a014a, type: 3}
   - {fileID: 21300000, guid: aaccdc8df56f64345983e68352f3c6be, type: 3}
   - {fileID: 21300000, guid: 8d9d26032c946d949a741e51ed74d475, type: 3}
-  mySpriteRenderer: {fileID: 7804878617016640354}
-  myBackgroundRenderer: {fileID: 5908950214243323214}
-  lowestEmptyTile: {x: 0, y: 0}
+  spriteRenderer: {fileID: 7804878617016640354}
+  highlightRenderer: {fileID: 5908950214243323214}
 --- !u!61 &6507545335838630052
 BoxCollider2D:
   m_ObjectHideFlags: 0

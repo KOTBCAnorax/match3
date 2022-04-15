@@ -4,84 +4,77 @@ using UnityEngine;
 
 public class TokenScript : MonoBehaviour
 {
-    [SerializeField] Sprite[] Colors;
-    [SerializeField] SpriteRenderer mySpriteRenderer;
-    [SerializeField] SpriteRenderer myBackgroundRenderer;
+    [SerializeField] Sprite[] tokenSpriteVariants;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] SpriteRenderer highlightRenderer;
 
-    private float speed = 10f;
-    private Vector2Int myPosition;
+    private float movementSpeed = 10f;
+    private Vector2Int gridCoordinates;
     private Vector2Int tileBelowPosition;
-    private DirectorScript directorRef;
+    private DirectorScript director;
 
-    public void Setup(GameObject director)
+    public void Setup(DirectorScript directorScript)
     {
-        myBackgroundRenderer.enabled = false;
+        highlightRenderer.enabled = false;
         PickColor();
-        directorRef = director.GetComponent<DirectorScript>();
-        myPosition = Vector2Int.RoundToInt(transform.position);
+        director = directorScript;
+        gridCoordinates = Vector2Int.RoundToInt(transform.position);
         FindTileBelowPosition();
     }
 
     private void Update()
     {
-        Fall();
+        Move();
     }
 
     private void PickColor()
     {
-        int colorId = Random.Range(0, Colors.Length);
-        mySpriteRenderer.sprite = Colors[colorId];
+        int colorId = Random.Range(0, tokenSpriteVariants.Length);
+        spriteRenderer.sprite = tokenSpriteVariants[colorId];
     }
 
     private void FindTileBelowPosition()
     {
-        tileBelowPosition.x = myPosition.x;
-        tileBelowPosition.y = (myPosition.y - 1 >= 0) ? (myPosition.y - 1) : 0;
+        tileBelowPosition.x = gridCoordinates.x;
+        tileBelowPosition.y = (gridCoordinates.y - 1 >= 0) ? (gridCoordinates.y - 1) : 0;
     }
 
-    private void Fall()
+    private void Move()
     {
         if (Mathf.Ceil(transform.position.y) == tileBelowPosition.y)
         {
-            UpdatePosition();
+            UpdatePositionOnFallComplete();
         }
         
-        if (!TileBelowIsOccupied())
+        if (!IsTileBelowOccupied())
         {
             transform.position =
             Vector2.MoveTowards(transform.position, tileBelowPosition,
-                                speed * Time.deltaTime);
+                                movementSpeed * Time.deltaTime);
         }
     }
 
-    private void UpdatePosition()
+    private void UpdatePositionOnFallComplete()
     {
-        directorRef.SetTileEmpty(myPosition.x, myPosition.y);
-        directorRef.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        director.SetTileEmpty(gridCoordinates.x, gridCoordinates.y);
+        director.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
 
-        myPosition.y = tileBelowPosition.y;
-        tileBelowPosition.y = (myPosition.y - 1 >= 0) ? (myPosition.y - 1) : 0;
+        gridCoordinates.y = tileBelowPosition.y;
+        tileBelowPosition.y = Mathf.Max(gridCoordinates.y - 1, 0);
     }
 
-    private bool TileBelowIsOccupied()
+    private bool IsTileBelowOccupied()
     {
-        return directorRef.TileIsOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        return director.IsTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
     }
 
     private void OnMouseEnter()
     {
-        myBackgroundRenderer.enabled = true;
+        highlightRenderer.enabled = true;
     }
 
     private void OnMouseExit()
     {
-        myBackgroundRenderer.enabled = false;
-    }
-
-    //Debug
-    private void OnMouseUp()
-    {
-        directorRef.SetTileEmpty(myPosition.x, myPosition.y);
-        Destroy(gameObject);
+        highlightRenderer.enabled = false;
     }
 }

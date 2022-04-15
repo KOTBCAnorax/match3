@@ -374,7 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rowsCount: 7
   columsCount: 6
-  tilePrefab: {fileID: 7230959850101212074, guid: 5271bb4ad7fdf3f49a4b5d962cccc6ae, type: 3}
+  tilePrefab: {fileID: 3623529504407024558, guid: 5271bb4ad7fdf3f49a4b5d962cccc6ae, type: 3}
   tokenPrefab: {fileID: 2771962255520614430, guid: 4d56d4bdb01d83942a2d137ad93016b2, type: 3}
   fieldObject: {fileID: 1611233596}
   tokensContainerObject: {fileID: 859696683}

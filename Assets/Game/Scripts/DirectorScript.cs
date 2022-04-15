@@ -7,12 +7,12 @@ public class DirectorScript: MonoBehaviour
     [SerializeField] private int rowsCount = 7;
     [SerializeField] private int columsCount = 6;
 
-    [SerializeField] private TileScript tilePrefab;
+    [SerializeField] private GameObject tilePrefab;
     [SerializeField] private TokenScript tokenPrefab;
     [SerializeField] private Transform fieldObject;
     [SerializeField] private Transform tokensContainerObject;
 
-    private bool[,] grid;
+    private bool[,] occupiedTilesGrid;
 
     private void Start()
     {
@@ -32,7 +32,7 @@ public class DirectorScript: MonoBehaviour
             return;
         }
 
-        grid = new bool[columsCount, rowsCount];
+        occupiedTilesGrid = new bool[columsCount, rowsCount];
 
         for (int i = 0; i < columsCount; i++)
         {
@@ -41,7 +41,7 @@ public class DirectorScript: MonoBehaviour
                 Vector2 pos = new Vector2(i, j);
                 Instantiate(tilePrefab, pos, Quaternion.identity, fieldObject);
 
-                grid[i, j] = false;
+                SetTileEmpty(i, j);
             }
         }
     }
@@ -52,13 +52,13 @@ public class DirectorScript: MonoBehaviour
 
         for (int i = 0; i < columsCount; i++)
         {
-            if (!TileIsOccupied(i, topRow))
+            if (!IsTileOccupied(i, topRow))
             {
                 Vector2 pos = new Vector2(i, topRow);
                 Instantiate(tokenPrefab, pos, Quaternion.identity, 
-                    tokensContainerObject).Setup(gameObject);
+                    tokensContainerObject).Setup(gameObject.GetComponent<DirectorScript>());
 
-                grid[i, topRow] = true;
+                SetTileOccupied(i, topRow);
             }
         }
     }
@@ -68,18 +68,18 @@ public class DirectorScript: MonoBehaviour
         return obj.childCount > 0;
     }
 
-    public bool TileIsOccupied(int column, int row)
+    public bool IsTileOccupied(int column, int row)
     {
-        return grid[column, row];
+        return occupiedTilesGrid[column, row];
     }
 
     public void SetTileEmpty(int column, int row)
     {
-        grid[column, row] = false;
+        occupiedTilesGrid[column, row] = false;
     }
 
     public void SetTileOccupied(int column, int row)
     {
-        grid[column, row] = true;
+        occupiedTilesGrid[column, row] = true;
     }
 }
