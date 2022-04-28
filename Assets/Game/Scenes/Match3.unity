@@ -324,8 +324,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1862144566}
-  m_RootOrder: 3
+  m_Father: {fileID: 1335925614}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1335925613
 GameObject:
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 1335925614}
   - component: {fileID: 1335925615}
   m_Layer: 0
-  m_Name: Generator
+  m_Name: Director
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +354,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1611233596}
+  - {fileID: 859696683}
   m_Father: {fileID: 1862144566}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -367,13 +369,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1335925613}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443e32c489b5fa34ea9389c26662936a, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e919e3dbe56ee5449736d9d6736ee38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rowsCount: 7
+  columsCount: 6
   tilePrefab: {fileID: 3623529504407024558, guid: 5271bb4ad7fdf3f49a4b5d962cccc6ae, type: 3}
-  tokenPrefab: {fileID: 7804878617016640355, guid: 4d56d4bdb01d83942a2d137ad93016b2, type: 3}
-  fieldObject: {fileID: 1611233595}
-  tokensContainerObject: {fileID: 859696682}
+  tokenPrefab: {fileID: 2771962255520614430, guid: 4d56d4bdb01d83942a2d137ad93016b2, type: 3}
+  fieldObject: {fileID: 1611233596}
+  tokensContainerObject: {fileID: 859696683}
 --- !u!1 &1611233595
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,8 +405,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1862144566}
-  m_RootOrder: 2
+  m_Father: {fileID: 1335925614}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1862144565
 GameObject:
@@ -433,8 +437,6 @@ Transform:
   m_Children:
   - {fileID: 2144679241}
   - {fileID: 1335925614}
-  - {fileID: 1611233596}
-  - {fileID: 859696683}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
