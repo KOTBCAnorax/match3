@@ -10,7 +10,7 @@ public class TokenScript : MonoBehaviour
 
     private float movementSpeed = 10f;
     private Vector2Int gridCoordinates;
-    private Vector2Int tileBelowPosition;
+    private Vector2Int tileBelowCoordinates;
     private DirectorScript director;
 
     public void Setup(DirectorScript directorScript)
@@ -35,13 +35,13 @@ public class TokenScript : MonoBehaviour
 
     private void FindTileBelowPosition()
     {
-        tileBelowPosition.x = gridCoordinates.x;
-        tileBelowPosition.y = (gridCoordinates.y - 1 >= 0) ? (gridCoordinates.y - 1) : 0;
+        tileBelowCoordinates.x = gridCoordinates.x;
+        tileBelowCoordinates.y = (gridCoordinates.y - 1 >= 0) ? (gridCoordinates.y - 1) : 0;
     }
 
     private void Move()
     {
-        if (Mathf.Ceil(transform.position.y) == tileBelowPosition.y)
+        if (Mathf.Ceil(transform.position.y) == tileBelowCoordinates.y)
         {
             UpdatePositionOnFallComplete();
         }
@@ -49,7 +49,7 @@ public class TokenScript : MonoBehaviour
         if (!IsTileBelowOccupied())
         {
             transform.position =
-            Vector2.MoveTowards(transform.position, tileBelowPosition,
+            Vector2.MoveTowards(transform.position, tileBelowCoordinates,
                                 movementSpeed * Time.deltaTime);
         }
     }
@@ -57,15 +57,15 @@ public class TokenScript : MonoBehaviour
     private void UpdatePositionOnFallComplete()
     {
         director.SetTileEmpty(gridCoordinates.x, gridCoordinates.y);
-        director.SetTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        director.SetTileOccupied(tileBelowCoordinates.x, tileBelowCoordinates.y);
 
-        gridCoordinates.y = tileBelowPosition.y;
-        tileBelowPosition.y = Mathf.Max(gridCoordinates.y - 1, 0);
+        gridCoordinates.y = tileBelowCoordinates.y;
+        tileBelowCoordinates.y = Mathf.Max(gridCoordinates.y - 1, 0);
     }
 
     private bool IsTileBelowOccupied()
     {
-        return director.IsTileOccupied(tileBelowPosition.x, tileBelowPosition.y);
+        return director.IsTileOccupied(tileBelowCoordinates.x, tileBelowCoordinates.y);
     }
 
     private void OnMouseEnter()
@@ -76,5 +76,11 @@ public class TokenScript : MonoBehaviour
     private void OnMouseExit()
     {
         highlightRenderer.enabled = false;
+    }
+
+    private void OnMouseUp()
+    {
+        director.SetTileEmpty(gridCoordinates.x, gridCoordinates.y);
+        Destroy(gameObject);
     }
 }
